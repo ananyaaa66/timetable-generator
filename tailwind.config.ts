@@ -61,12 +61,12 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        glow: "0 30px 60px -30px hsla(var(--primary), 0.45)",
-        card: "0 12px 32px -18px hsla(var(--foreground), 0.22)",
+        glow: "0 30px 60px -30px hsl(var(--primary) / 0.45)",
+        card: "0 12px 32px -18px hsl(var(--foreground) / 0.22)",
       },
       backgroundImage: {
         "gradient-mesh":
-          "radial-gradient(at 20% 20%, hsla(var(--primary),0.18) 0, transparent 55%), radial-gradient(at 80% 10%, hsla(var(--accent),0.2) 0, transparent 55%), radial-gradient(at 50% 80%, hsla(var(--secondary),0.18) 0, transparent 60%)",
+          "radial-gradient(at 20% 20%, hsl(var(--primary) / 0.18) 0, transparent 55%), radial-gradient(at 80% 10%, hsl(var(--accent) / 0.2) 0, transparent 55%), radial-gradient(at 50% 80%, hsl(var(--secondary) / 0.18) 0, transparent 60%)",
       },
       keyframes: {
         "accordion-down": {
