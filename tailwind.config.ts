@@ -1,18 +1,21 @@
 import type { Config } from "tailwindcss";
 
-export default {
+const config: Config = {
   darkMode: ["class"],
   content: ["./client/**/*.{ts,tsx}"],
-  prefix: "",
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "1.75rem",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1320px",
       },
     },
     extend: {
+      fontFamily: {
+        display: ["Poppins", "Inter", "system-ui", "sans-serif"],
+        body: ["Inter", "system-ui", "sans-serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -27,10 +30,6 @@ export default {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
@@ -38,6 +37,10 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -47,21 +50,23 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
+        highlight: {
+          DEFAULT: "hsl(var(--highlight))",
+          foreground: "hsl(var(--highlight-foreground))",
         },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        glow: "0 30px 60px -30px hsla(var(--primary), 0.45)",
+        card: "0 12px 32px -18px hsla(var(--foreground), 0.22)",
+      },
+      backgroundImage: {
+        "gradient-mesh":
+          "radial-gradient(at 20% 20%, hsla(var(--primary),0.18) 0, transparent 55%), radial-gradient(at 80% 10%, hsla(var(--accent),0.2) 0, transparent 55%), radial-gradient(at 50% 80%, hsla(var(--secondary),0.18) 0, transparent 60%)",
       },
       keyframes: {
         "accordion-down": {
@@ -80,12 +85,25 @@ export default {
             height: "0",
           },
         },
+        "fade-up": {
+          from: {
+            opacity: "0",
+            transform: "translateY(20px)",
+          },
+          to: {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-up": "fade-up 0.6s ease-in-out forwards",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+};
+
+export default config;
