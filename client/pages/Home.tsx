@@ -52,7 +52,7 @@ const gradients = ["from-primary/15 to-primary/5", "from-accent/20 to-accent/5",
 export default function Home() {
   return (
     <div className="space-y-20">
-      <section className="relative overflow-hidden rounded-4xl border border-white/40 bg-white/80 p-10 shadow-card sm:p-14 lg:p-16">
+      <section className="relative overflow-hidden rounded-[2.75rem] border border-white/40 bg-white/80 p-10 shadow-card sm:p-14 lg:p-16">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/20" />
         <div className="relative flex flex-col gap-10 lg:flex-row">
           <div className="flex-1 space-y-6">
@@ -74,7 +74,7 @@ export default function Home() {
               </Link>
             </div>
           </div>
-          <div className="flex flex-1 flex-col gap-4 rounded-3xl bg-white/55 p-6 shadow-glow backdrop-blur">
+          <div className="flex flex-1 flex-col gap-4 rounded-[2rem] bg-white/55 p-6 shadow-glow backdrop-blur">
             <h2 className="font-display text-xl font-semibold text-foreground">Preview your week</h2>
             <div className="grid grid-cols-5 gap-2 text-xs font-medium text-foreground/70">
               {["Mon", "Tue", "Wed", "Thu", "Fri"].map((day) => (
@@ -126,7 +126,7 @@ export default function Home() {
         ))}
       </section>
 
-      <section className="rounded-4xl border border-white/40 bg-white/80 p-10 shadow-card">
+      <section className="rounded-[2.5rem] border border-white/40 bg-white/80 p-10 shadow-card">
         <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="chip mb-4">How it works</p>
@@ -149,7 +149,7 @@ export default function Home() {
                 {step.label}
               </span>
               <h3 className="font-display text-xl font-semibold text-foreground">{step.title}</h3>
-              <p className="text-sm text-foreground/65">{step.description}</p>
+              <p className="text-sm text-foreground/70">{step.description}</p>
             </div>
           ))}
         </div>
