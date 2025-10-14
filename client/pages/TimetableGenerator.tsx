@@ -280,8 +280,9 @@ export default function TimetableGenerator() {
   };
 
   const persistState = (result: TimetableResult | null) => {
+    const trimmedSubjects = formSubjects.map((subject) => subject.trim());
     const state: StoredState = {
-      subjects,
+      subjects: trimmedSubjects,
       selectedDays,
       periodsPerDay,
       timetable: result,
