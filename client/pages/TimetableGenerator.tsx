@@ -21,6 +21,10 @@ const dayOptions = [
   { value: "Sunday", short: "Sun" },
 ];
 
+const sortByCalendarOrder = (a: string, b: string) =>
+  dayOptions.findIndex((option) => option.value === a) -
+  dayOptions.findIndex((option) => option.value === b);
+
 const STORAGE_KEY = "timetable-generator-state-v1";
 
 interface StoredState {
@@ -239,10 +243,6 @@ export default function TimetableGenerator() {
       prev.includes(day) ? prev.filter((item) => item !== day) : [...prev, day].sort(sortByCalendarOrder),
     );
   };
-
-  const sortByCalendarOrder = (a: string, b: string) =>
-    dayOptions.findIndex((option) => option.value === a) -
-    dayOptions.findIndex((option) => option.value === b);
 
   const handleGenerate = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
