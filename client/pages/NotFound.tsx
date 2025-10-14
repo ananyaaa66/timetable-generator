@@ -1,24 +1,35 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { Compass } from "lucide-react";
 
 const NotFound = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname,
-    );
+    console.warn("404 - Route not found:", location.pathname);
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
-          Return to Home
-        </a>
+    <div className="flex min-h-[60vh] items-center justify-center">
+      <div className="glass-panel max-w-xl space-y-6 p-10 text-center">
+        <span className="mx-auto flex size-16 items-center justify-center rounded-3xl bg-primary/10 text-primary">
+          <Compass className="size-7" />
+        </span>
+        <div className="space-y-3">
+          <h1 className="text-3xl font-semibold">Page not found</h1>
+          <p className="text-sm text-foreground/70">
+            We could not find the page you were looking for. Explore the Timetable Generator to create a new schedule
+            or return to the homepage for more options.
+          </p>
+        </div>
+        <div className="flex flex-wrap justify-center gap-3">
+          <Link to="/" className="soft-button-primary">
+            Back to Home
+          </Link>
+          <Link to="/generator" className="soft-button-secondary">
+            Build a timetable
+          </Link>
+        </div>
       </div>
     </div>
   );
