@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, CalendarDays, Clock, Download, PenSquare, Users } from "lucide-react";
+import { ArrowRight, CalendarDays, Clock, Download, PenSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const highlights = [
