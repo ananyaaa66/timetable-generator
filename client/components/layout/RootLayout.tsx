@@ -11,7 +11,6 @@ const navItems = [
   { label: "Home", to: "/" },
   { label: "Generator", to: "/generator" },
   { label: "About", to: "/about" },
-  { label: "Resources", to: "/about#resources" },
 ];
 
 export function RootLayout({ children }: RootLayoutProps) {
