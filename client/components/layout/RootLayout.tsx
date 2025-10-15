@@ -11,6 +11,7 @@ const navItems = [
   { label: "Home", to: "/" },
   { label: "Generator", to: "/generator" },
   { label: "About", to: "/about" },
+  { label: "Resources", to: "/about#resources" },
 ];
 
 export function RootLayout({ children }: RootLayoutProps) {
@@ -21,9 +22,9 @@ export function RootLayout({ children }: RootLayoutProps) {
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-white/40">
         <div className="container flex h-20 items-center justify-between gap-6">
           <Link to="/" className="flex items-center gap-2">
-            <span className="chip">Timetable Generator</span>
+            <span className="chip">Faculty Suite</span>
             <span className="font-display text-lg font-semibold tracking-tight">
-              Plan Your Week
+              Teacher Timetable Generator
             </span>
           </Link>
           <nav className="hidden items-center gap-1 md:flex">
@@ -85,23 +86,14 @@ export function RootLayout({ children }: RootLayoutProps) {
         <div className="container flex flex-col gap-6 py-10 md:flex-row md:items-center md:justify-between">
           <div className="space-y-1">
             <p className="font-display text-lg font-semibold text-foreground">
-              Timetable Generator
+              Teacher Timetable Generator
             </p>
             <p className="text-sm text-foreground/70">
-              Crafted to help you design balanced, flexible study schedules.
+              Crafted to keep instructors in sync across sections, rooms, and weekly teaching loads.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-3 text-sm text-foreground/70">
-            <span>© {new Date().getFullYear()} Timetable Studio</span>
-            <span className="hidden h-4 w-px bg-foreground/20 md:block" />
-            <a
-              href="https://builder.io"
-              target="_blank"
-              rel="noreferrer"
-              className="transition hover:text-primary"
-            >
-              Powered by modern web experiences
-            </a>
+            <span>Guiding teachers toward organised, conflict-free schedules.</span>
           </div>
         </div>
       </footer>
