@@ -36,7 +36,9 @@ export function RootLayout({ children }: RootLayoutProps) {
                   cn(
                     "rounded-full px-4 py-2 text-sm font-medium transition-all",
                     "hover:bg-primary/10 hover:text-primary",
-                    isActive ? "bg-primary text-primary-foreground shadow-glow" : "text-foreground/80",
+                    isActive
+                      ? "bg-primary text-primary-foreground shadow-glow"
+                      : "text-foreground/80",
                   )
                 }
               >
@@ -65,7 +67,9 @@ export function RootLayout({ children }: RootLayoutProps) {
                     cn(
                       "rounded-full px-4 py-2 text-sm font-semibold",
                       "hover:bg-primary/10 hover:text-primary",
-                      isActive ? "bg-primary text-primary-foreground shadow" : "text-foreground/85",
+                      isActive
+                        ? "bg-primary text-primary-foreground shadow"
+                        : "text-foreground/85",
                     )
                   }
                 >
@@ -89,11 +93,14 @@ export function RootLayout({ children }: RootLayoutProps) {
               Teacher Timetable Generator
             </p>
             <p className="text-sm text-foreground/70">
-              Crafted to keep instructors in sync across sections, rooms, and weekly teaching loads.
+              Crafted to keep instructors in sync across sections, rooms, and
+              weekly teaching loads.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-3 text-sm text-foreground/70">
-            <span>Guiding teachers toward organised, conflict-free schedules.</span>
+            <span>
+              Guiding teachers toward organised, conflict-free schedules.
+            </span>
           </div>
         </div>
       </footer>

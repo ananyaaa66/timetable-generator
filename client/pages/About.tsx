@@ -43,11 +43,14 @@ export default function About() {
         <div className="max-w-3xl space-y-6">
           <span className="chip">About Timetable Generator</span>
           <h1 className="text-4xl font-semibold md:text-5xl">
-            Built by Ananya Singh to streamline teaching rotations and faculty coverage
+            Built by Ananya Singh to streamline teaching rotations and faculty
+            coverage
           </h1>
           <p className="text-base text-foreground/70 md:text-lg">
-            Teachers deserve a planning companion that prioritises their time. The Timetable Generator keeps sections in
-            sync, honours subject contact hours, and gives leadership an instant snapshot of coverage across the week.
+            Teachers deserve a planning companion that prioritises their time.
+            The Timetable Generator keeps sections in sync, honours subject
+            contact hours, and gives leadership an instant snapshot of coverage
+            across the week.
           </p>
         </div>
       </section>
@@ -61,32 +64,44 @@ export default function About() {
             <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
               <mission.icon className="size-6" />
             </span>
-            <h2 className="font-display text-xl font-semibold text-foreground">{mission.title}</h2>
+            <h2 className="font-display text-xl font-semibold text-foreground">
+              {mission.title}
+            </h2>
             <p className="text-sm text-foreground/70">{mission.description}</p>
           </div>
         ))}
       </section>
 
-      <section id="resources" className="rounded-[2.5rem] border border-white/50 bg-white/80 p-10 shadow-card">
+      <section
+        id="resources"
+        className="rounded-[2.5rem] border border-white/50 bg-white/80 p-10 shadow-card"
+      >
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div className="space-y-4">
             <h2 className="text-3xl font-semibold">Meet the maker</h2>
             <p className="text-sm text-foreground/70 md:text-base">
-              Hi, I am <span className="font-semibold text-primary">Ananya Singh</span>. I created this generator for
-              teachers who juggle multiple sections daily. It adapts to changing timetables and keeps every class on a
+              Hi, I am{" "}
+              <span className="font-semibold text-primary">Ananya Singh</span>.
+              I created this generator for teachers who juggle multiple sections
+              daily. It adapts to changing timetables and keeps every class on a
               unique slot so you never sprint between rooms.
             </p>
             <p className="text-sm text-foreground/70 md:text-base">
-              The roadmap includes richer analytics for subject loads, support for co-teaching, and seamless exports into
-              school communication platforms.
+              The roadmap includes richer analytics for subject loads, support
+              for co-teaching, and seamless exports into school communication
+              platforms.
             </p>
           </div>
           <aside className="glass-panel space-y-5 p-6">
-            <h3 className="text-lg font-semibold text-foreground">Core values</h3>
+            <h3 className="text-lg font-semibold text-foreground">
+              Core values
+            </h3>
             <ul className="space-y-4 text-sm text-foreground/70">
               {values.map((value) => (
                 <li key={value.heading}>
-                  <p className="font-semibold text-foreground">{value.heading}</p>
+                  <p className="font-semibold text-foreground">
+                    {value.heading}
+                  </p>
                   <p>{value.body}</p>
                 </li>
               ))}

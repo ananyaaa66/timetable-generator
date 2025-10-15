@@ -81,15 +81,23 @@ export function generateTimetable(config: TimetableConfig): TimetableResult {
   );
 
   const slots = generateSlots(days.length, periods);
-  const sectionNames = Array.from({ length: sectionsCount }, (_, index) => createSectionName(index));
-  const sectionGrids = sectionNames.map(() => createEmptyGrid(periods, days.length));
+  const sectionNames = Array.from({ length: sectionsCount }, (_, index) =>
+    createSectionName(index),
+  );
+  const sectionGrids = sectionNames.map(() =>
+    createEmptyGrid(periods, days.length),
+  );
   const slotTracker = createSlotTracker(days.length, periods);
 
   let unassigned = 0;
   let cursor = 0;
 
   subjects.forEach((subject) => {
-    for (let sectionIndex = 0; sectionIndex < sectionsCount; sectionIndex += 1) {
+    for (
+      let sectionIndex = 0;
+      sectionIndex < sectionsCount;
+      sectionIndex += 1
+    ) {
       for (let session = 0; session < subject.sessionsPerWeek; session += 1) {
         const slot = findNextAvailableSlot(slots, slotTracker, cursor);
         if (!slot) {
@@ -97,7 +105,8 @@ export function generateTimetable(config: TimetableConfig): TimetableResult {
           continue;
         }
 
-        sectionGrids[sectionIndex][slot.periodIndex][slot.dayIndex] = subject.name;
+        sectionGrids[sectionIndex][slot.periodIndex][slot.dayIndex] =
+          subject.name;
         slotTracker[slot.periodIndex][slot.dayIndex] = true;
         cursor = (slot.slotIndex + 1) % slots.length;
       }
@@ -141,7 +150,11 @@ function generateSlots(dayCount: number, periodCount: number): Slot[] {
   return slots;
 }
 
-function findNextAvailableSlot(slots: Slot[], tracker: boolean[][], cursor: number): Slot | null {
+function findNextAvailableSlot(
+  slots: Slot[],
+  tracker: boolean[][],
+  cursor: number,
+): Slot | null {
   const totalSlots = slots.length;
   for (let iteration = 0; iteration < totalSlots; iteration += 1) {
     const index = (cursor + iteration) % totalSlots;
@@ -176,6 +189,12 @@ export function updateSectionCell(
   });
 }
 
-export function calculateRequiredSessions(subjects: SubjectConfig[], sections: number): number {
-  return subjects.reduce((total, subject) => total + subject.sessionsPerWeek * sections, 0);
+export function calculateRequiredSessions(
+  subjects: SubjectConfig[],
+  sections: number,
+): number {
+  return subjects.reduce(
+    (total, subject) => total + subject.sessionsPerWeek * sections,
+    0,
+  );
 }

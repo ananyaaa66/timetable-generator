@@ -48,7 +48,10 @@ const defaultSubjectTemplates: SubjectConfig[] = [
   { name: "Art", sessionsPerWeek: 1 },
 ];
 
-const createEmptySubject = (): SubjectConfig => ({ name: "", sessionsPerWeek: 1 });
+const createEmptySubject = (): SubjectConfig => ({
+  name: "",
+  sessionsPerWeek: 1,
+});
 
 function normalizeSubject(subject: SubjectConfig): SubjectConfig {
   return {
@@ -77,12 +80,16 @@ function SubjectInputs({
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/45">
               Subject {index + 1}
             </span>
-            <span className="text-[11px] font-medium text-foreground/45">Weekly sessions</span>
+            <span className="text-[11px] font-medium text-foreground/45">
+              Weekly sessions
+            </span>
           </div>
           <input
             value={subject.name}
             onChange={(event) => onNameChange(index, event.target.value)}
-            placeholder={defaultSubjectTemplates[index]?.name ?? "Add subject name"}
+            placeholder={
+              defaultSubjectTemplates[index]?.name ?? "Add subject name"
+            }
             className="mt-2 h-10 w-full rounded-xl border border-border bg-white/80 px-3 text-sm text-foreground outline-none transition placeholder:text-foreground/40 focus:border-primary/70"
           />
           <div className="mt-3 flex items-center gap-2">
@@ -91,7 +98,9 @@ function SubjectInputs({
               min={1}
               max={10}
               value={subject.sessionsPerWeek}
-              onChange={(event) => onSessionChange(index, Number(event.target.value))}
+              onChange={(event) =>
+                onSessionChange(index, Number(event.target.value))
+              }
               className="h-10 w-24 rounded-xl border border-border bg-white/80 px-3 text-sm text-foreground outline-none transition focus:border-primary/70"
             />
             <span className="text-xs text-foreground/55">per section</span>
@@ -142,53 +151,73 @@ function TimetablePreview({
   tableRef,
 }: {
   timetable: TimetableResult | null;
-  onCellEdit: (sectionIndex: number, periodIndex: number, dayIndex: number, value: string) => void;
+  onCellEdit: (
+    sectionIndex: number,
+    periodIndex: number,
+    dayIndex: number,
+    value: string,
+  ) => void;
   tableRef: React.RefObject<HTMLDivElement>;
 }) {
   if (!timetable || timetable.sections.length === 0) {
     return (
       <div className="glass-panel flex flex-col items-center justify-center gap-3 p-10 text-center text-foreground/60">
         <CalendarPlus className="size-10 text-primary" />
-        <p className="font-semibold">Your timetable will appear here after generation.</p>
+        <p className="font-semibold">
+          Your timetable will appear here after generation.
+        </p>
         <p className="max-w-sm text-sm text-foreground/55">
-          Configure the form above, then select “Generate timetable” to populate your teaching rotation.
+          Configure the form above, then select “Generate timetable” to populate
+          your teaching rotation.
         </p>
       </div>
     );
   }
 
-  const assignedSessions = timetable.requiredSessions - timetable.unassignedSessions;
+  const assignedSessions =
+    timetable.requiredSessions - timetable.unassignedSessions;
 
   return (
     <div ref={tableRef} className="space-y-6">
       <div className="glass-panel flex flex-wrap items-center justify-between gap-4 p-6 text-sm text-foreground/70">
         <div className="space-y-1">
-          <p className="text-base font-semibold text-foreground">Scheduling summary</p>
+          <p className="text-base font-semibold text-foreground">
+            Scheduling summary
+          </p>
           <p>
-            {assignedSessions} of {timetable.requiredSessions} sessions scheduled across {timetable.sections.length} sections.
+            {assignedSessions} of {timetable.requiredSessions} sessions
+            scheduled across {timetable.sections.length} sections.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm">
-          <span className="rounded-full bg-primary/10 px-3 py-1 text-primary">Total slots: {timetable.totalSlots}</span>
+          <span className="rounded-full bg-primary/10 px-3 py-1 text-primary">
+            Total slots: {timetable.totalSlots}
+          </span>
           <span className="rounded-full bg-accent/40 px-3 py-1 text-accent-foreground">
             Teaching days: {timetable.days.length}
           </span>
           <span className="rounded-full bg-secondary/40 px-3 py-1 text-secondary-foreground">
-            Periods/day: {timetable.sections[0].grid.length > 0 ? timetable.sections[0].grid.length : 0}
+            Periods/day:{" "}
+            {timetable.sections[0].grid.length > 0
+              ? timetable.sections[0].grid.length
+              : 0}
           </span>
         </div>
       </div>
       {timetable.unassignedSessions > 0 ? (
         <div className="glass-panel border-destructive/40 bg-destructive/10 p-5 text-sm text-destructive-foreground">
-          Not enough periods to place all sessions. Increase periods per day, add more teaching days, or reduce weekly
-          sessions to schedule the remaining {timetable.unassignedSessions} lesson(s).
+          Not enough periods to place all sessions. Increase periods per day,
+          add more teaching days, or reduce weekly sessions to schedule the
+          remaining {timetable.unassignedSessions} lesson(s).
         </div>
       ) : null}
       <div className="grid gap-6 xl:grid-cols-2">
         {timetable.sections.map((section, sectionIndex) => (
           <div key={section.name} className="glass-panel space-y-4 p-6">
             <div className="flex items-center justify-between gap-4">
-              <h3 className="font-display text-lg font-semibold text-foreground">{section.name}</h3>
+              <h3 className="font-display text-lg font-semibold text-foreground">
+                {section.name}
+              </h3>
               <span className="chip">{timetable.days.length} day rotation</span>
             </div>
             <div className="overflow-x-auto">
@@ -250,7 +279,9 @@ function TimetablePreview({
 
 export default function TimetableGenerator() {
   const [subjectCount, setSubjectCount] = useState(5);
-  const [subjects, setSubjects] = useState<SubjectConfig[]>(() => defaultSubjectTemplates.slice(0, 5));
+  const [subjects, setSubjects] = useState<SubjectConfig[]>(() =>
+    defaultSubjectTemplates.slice(0, 5),
+  );
   const [selectedDays, setSelectedDays] = useState<string[]>([
     "Monday",
     "Tuesday",
@@ -266,7 +297,10 @@ export default function TimetableGenerator() {
 
   const tableRef = useRef<HTMLDivElement>(null);
 
-  const formSubjects = useMemo(() => subjects.slice(0, subjectCount), [subjectCount, subjects]);
+  const formSubjects = useMemo(
+    () => subjects.slice(0, subjectCount),
+    [subjectCount, subjects],
+  );
 
   useEffect(() => {
     try {
@@ -303,10 +337,13 @@ export default function TimetableGenerator() {
     setSubjectCount(safeValue);
     setSubjects((prev) => {
       if (safeValue > prev.length) {
-        const additional = Array.from({ length: safeValue - prev.length }, (_, index) => {
-          const template = defaultSubjectTemplates[prev.length + index];
-          return template ? { ...template } : createEmptySubject();
-        });
+        const additional = Array.from(
+          { length: safeValue - prev.length },
+          (_, index) => {
+            const template = defaultSubjectTemplates[prev.length + index];
+            return template ? { ...template } : createEmptySubject();
+          },
+        );
         return [...prev, ...additional];
       }
       return prev.slice(0, safeValue);
@@ -314,17 +351,30 @@ export default function TimetableGenerator() {
   };
 
   const handleSubjectNameChange = (index: number, value: string) => {
-    setSubjects((prev) => prev.map((subject, i) => (i === index ? { ...subject, name: value } : subject)));
+    setSubjects((prev) =>
+      prev.map((subject, i) =>
+        i === index ? { ...subject, name: value } : subject,
+      ),
+    );
   };
 
   const handleSubjectSessionsChange = (index: number, value: number) => {
-    const safeValue = Math.min(Math.max(Number.isFinite(value) ? value : 1, 1), 10);
-    setSubjects((prev) => prev.map((subject, i) => (i === index ? { ...subject, sessionsPerWeek: safeValue } : subject)));
+    const safeValue = Math.min(
+      Math.max(Number.isFinite(value) ? value : 1, 1),
+      10,
+    );
+    setSubjects((prev) =>
+      prev.map((subject, i) =>
+        i === index ? { ...subject, sessionsPerWeek: safeValue } : subject,
+      ),
+    );
   };
 
   const handleToggleDay = (day: string) => {
     setSelectedDays((prev) =>
-      prev.includes(day) ? prev.filter((item) => item !== day) : [...prev, day].sort(sortByCalendarOrder),
+      prev.includes(day)
+        ? prev.filter((item) => item !== day)
+        : [...prev, day].sort(sortByCalendarOrder),
     );
   };
 
@@ -352,7 +402,10 @@ export default function TimetableGenerator() {
     }
 
     const totalSlots = selectedDays.length * periodsPerDay;
-    const requiredSessions = calculateRequiredSessions(sanitizedSubjects, sectionCount);
+    const requiredSessions = calculateRequiredSessions(
+      sanitizedSubjects,
+      sectionCount,
+    );
 
     if (requiredSessions > totalSlots) {
       toast.error(
@@ -371,7 +424,10 @@ export default function TimetableGenerator() {
       if (index < normalizedSubjects.length) {
         return {
           name: normalizedSubjects[index].name,
-          sessionsPerWeek: Math.max(1, normalizedSubjects[index].sessionsPerWeek || 1),
+          sessionsPerWeek: Math.max(
+            1,
+            normalizedSubjects[index].sessionsPerWeek || 1,
+          ),
         };
       }
       return subject;
@@ -389,15 +445,29 @@ export default function TimetableGenerator() {
     }
   };
 
-  const handleCellEdit = (sectionIndex: number, periodIndex: number, dayIndex: number, value: string) => {
+  const handleCellEdit = (
+    sectionIndex: number,
+    periodIndex: number,
+    dayIndex: number,
+    value: string,
+  ) => {
     setTimetable((prev) => {
       if (!prev) return prev;
-      const sections = updateSectionCell(prev.sections, sectionIndex, periodIndex, dayIndex, value);
+      const sections = updateSectionCell(
+        prev.sections,
+        sectionIndex,
+        periodIndex,
+        dayIndex,
+        value,
+      );
       return { ...prev, sections };
     });
   };
 
-  const persistState = (result: TimetableResult | null, snapshot: SubjectConfig[]) => {
+  const persistState = (
+    result: TimetableResult | null,
+    snapshot: SubjectConfig[],
+  ) => {
     const sanitizedSnapshot = snapshot.map((subject) => ({
       name: subject.name.trim(),
       sessionsPerWeek: Math.max(1, subject.sessionsPerWeek || 1),
@@ -443,7 +513,11 @@ export default function TimetableGenerator() {
         useCORS: true,
       });
       const imageData = canvas.toDataURL("image/png", 1.0);
-      const pdf = new jsPDF({ orientation: "landscape", unit: "pt", format: "a4" });
+      const pdf = new jsPDF({
+        orientation: "landscape",
+        unit: "pt",
+        format: "a4",
+      });
       const pageWidth = pdf.internal.pageSize.getWidth();
       const pageHeight = pdf.internal.pageSize.getHeight();
       const margin = 48;
@@ -462,8 +536,17 @@ export default function TimetableGenerator() {
       const offsetX = (pageWidth - renderWidth) / 2;
       const offsetY = (pageHeight - renderHeight) / 2;
 
-      pdf.addImage(imageData, "PNG", offsetX, offsetY, renderWidth, renderHeight);
-      pdf.save(`teacher-timetable-${new Date().toISOString().slice(0, 10)}.pdf`);
+      pdf.addImage(
+        imageData,
+        "PNG",
+        offsetX,
+        offsetY,
+        renderWidth,
+        renderHeight,
+      );
+      pdf.save(
+        `teacher-timetable-${new Date().toISOString().slice(0, 10)}.pdf`,
+      );
       toast.success("Timetable exported as PDF.");
     } catch (error) {
       console.error("Export failed", error);
@@ -491,10 +574,13 @@ export default function TimetableGenerator() {
     <div className="space-y-12">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="space-y-3">
-          <h1 className="text-3xl font-semibold md:text-4xl">Teacher Timetable Generator</h1>
+          <h1 className="text-3xl font-semibold md:text-4xl">
+            Teacher Timetable Generator
+          </h1>
           <p className="max-w-2xl text-sm text-foreground/70 md:text-base">
-            Capture the subjects you teach, weekly contact hours, and number of sections. Generate a conflict-free plan
-            that keeps every class on a unique slot while protecting your prep time.
+            Capture the subjects you teach, weekly contact hours, and number of
+            sections. Generate a conflict-free plan that keeps every class on a
+            unique slot while protecting your prep time.
           </p>
         </div>
         <button
@@ -506,21 +592,29 @@ export default function TimetableGenerator() {
         </button>
       </div>
 
-      <form onSubmit={handleGenerate} className="glass-panel space-y-10 bg-white/85 p-8 shadow-glow">
+      <form
+        onSubmit={handleGenerate}
+        className="glass-panel space-y-10 bg-white/85 p-8 shadow-glow"
+      >
         <div className="grid gap-6 lg:grid-cols-[1.35fr_0.65fr]">
           <div className="space-y-4">
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-semibold text-foreground/80">Number of subjects</label>
+              <label className="text-sm font-semibold text-foreground/80">
+                Number of subjects
+              </label>
               <input
                 type="number"
                 min={1}
                 max={16}
                 value={subjectCount}
-                onChange={(event) => handleSubjectCountChange(Number(event.target.value))}
+                onChange={(event) =>
+                  handleSubjectCountChange(Number(event.target.value))
+                }
                 className="h-12 rounded-2xl border border-border bg-white/80 px-4 text-sm text-foreground outline-none transition focus:border-primary/70"
               />
               <p className="text-xs text-foreground/50">
-                Add every subject you teach and specify how many times each section meets per week.
+                Add every subject you teach and specify how many times each
+                section meets per week.
               </p>
             </div>
             <SubjectInputs
@@ -532,27 +626,43 @@ export default function TimetableGenerator() {
 
           <div className="space-y-6">
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-foreground/80">Number of sections</label>
+              <label className="text-sm font-semibold text-foreground/80">
+                Number of sections
+              </label>
               <input
                 type="number"
                 min={1}
                 max={12}
                 value={sectionCount}
-                onChange={(event) => setSectionCount(Math.min(Math.max(Number(event.target.value) || 1, 1), 12))}
+                onChange={(event) =>
+                  setSectionCount(
+                    Math.min(Math.max(Number(event.target.value) || 1, 1), 12),
+                  )
+                }
                 className="h-12 rounded-2xl border border-border bg-white/80 px-4 text-sm text-foreground outline-none transition focus:border-primary/70"
               />
               <p className="text-xs text-foreground/50">
-                Sections are auto-labelled (Section A, Section B, …) and scheduled one after another to avoid clashes.
+                Sections are auto-labelled (Section A, Section B, …) and
+                scheduled one after another to avoid clashes.
               </p>
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-foreground/80">Days of the week (selectable checkboxes)</label>
-              <DaySelector selectedDays={selectedDays} onToggle={handleToggleDay} />
+              <label className="text-sm font-semibold text-foreground/80">
+                Days of the week (selectable checkboxes)
+              </label>
+              <DaySelector
+                selectedDays={selectedDays}
+                onToggle={handleToggleDay}
+              />
               <div className="flex flex-wrap gap-2 text-xs text-foreground/50">
                 <button
                   type="button"
-                  onClick={() => setSelectedDays(dayOptions.slice(0, 5).map((day) => day.value))}
+                  onClick={() =>
+                    setSelectedDays(
+                      dayOptions.slice(0, 5).map((day) => day.value),
+                    )
+                  }
                   className="underline-offset-4 transition hover:text-primary"
                 >
                   Weekdays
@@ -560,7 +670,11 @@ export default function TimetableGenerator() {
                 <span className="hidden h-3 w-px bg-foreground/20 sm:block" />
                 <button
                   type="button"
-                  onClick={() => setSelectedDays(dayOptions.slice(0, 7).map((day) => day.value))}
+                  onClick={() =>
+                    setSelectedDays(
+                      dayOptions.slice(0, 7).map((day) => day.value),
+                    )
+                  }
                   className="underline-offset-4 transition hover:text-primary"
                 >
                   Full week
@@ -569,17 +683,24 @@ export default function TimetableGenerator() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-foreground/80">Number of periods per day</label>
+              <label className="text-sm font-semibold text-foreground/80">
+                Number of periods per day
+              </label>
               <input
                 type="number"
                 min={1}
                 max={12}
                 value={periodsPerDay}
-                onChange={(event) => setPeriodsPerDay(Math.min(Math.max(Number(event.target.value) || 1, 1), 12))}
+                onChange={(event) =>
+                  setPeriodsPerDay(
+                    Math.min(Math.max(Number(event.target.value) || 1, 1), 12),
+                  )
+                }
                 className="h-12 rounded-2xl border border-border bg-white/80 px-4 text-sm text-foreground outline-none transition focus:border-primary/70"
               />
               <p className="text-xs text-foreground/50">
-                Each period slot can host one section at a time, ensuring teachers are never double-booked.
+                Each period slot can host one section at a time, ensuring
+                teachers are never double-booked.
               </p>
             </div>
           </div>
@@ -587,9 +708,13 @@ export default function TimetableGenerator() {
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-foreground/60">
-            Tip: Hover any cell to edit rooms, co-teachers, or lesson notes after scheduling.
+            Tip: Hover any cell to edit rooms, co-teachers, or lesson notes
+            after scheduling.
           </p>
-          <button type="submit" className="soft-button-primary inline-flex items-center">
+          <button
+            type="submit"
+            className="soft-button-primary inline-flex items-center"
+          >
             <CalendarPlus className="mr-2 size-4" /> Generate timetable
           </button>
         </div>
@@ -597,9 +722,12 @@ export default function TimetableGenerator() {
 
       <div className="flex flex-col gap-4 rounded-[2.5rem] border border-white/40 bg-white/80 p-6 shadow-card xl:flex-row xl:items-center xl:justify-between">
         <div className="space-y-1">
-          <p className="text-lg font-semibold text-foreground">Output controls</p>
+          <p className="text-lg font-semibold text-foreground">
+            Output controls
+          </p>
           <p className="text-sm text-foreground/65">
-            Save a draft for later adjustments or export a PDF to share with leadership teams and faculty.
+            Save a draft for later adjustments or export a PDF to share with
+            leadership teams and faculty.
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
@@ -609,7 +737,8 @@ export default function TimetableGenerator() {
             disabled={isSaving}
             className="soft-button-secondary inline-flex items-center disabled:cursor-not-allowed disabled:opacity-70"
           >
-            <Save className="mr-2 size-4" /> {isSaving ? "Saving..." : "Save timetable"}
+            <Save className="mr-2 size-4" />{" "}
+            {isSaving ? "Saving..." : "Save timetable"}
           </button>
           <button
             type="button"
@@ -617,7 +746,8 @@ export default function TimetableGenerator() {
             disabled={isExporting}
             className="soft-button-primary inline-flex items-center disabled:cursor-not-allowed disabled:opacity-70"
           >
-            <Download className="mr-2 size-4" /> {isExporting ? "Exporting..." : "Download as PDF"}
+            <Download className="mr-2 size-4" />{" "}
+            {isExporting ? "Exporting..." : "Download as PDF"}
           </button>
         </div>
       </div>
@@ -626,11 +756,15 @@ export default function TimetableGenerator() {
         <div className="mb-4 flex items-center gap-3 text-sm text-foreground/70">
           <Users2 className="size-4 text-primary" />
           <span>
-            Generated timetables stagger sessions across sections so the same teacher is never scheduled in two rooms at
-            once.
+            Generated timetables stagger sessions across sections so the same
+            teacher is never scheduled in two rooms at once.
           </span>
         </div>
-        <TimetablePreview timetable={timetable} onCellEdit={handleCellEdit} tableRef={tableRef} />
+        <TimetablePreview
+          timetable={timetable}
+          onCellEdit={handleCellEdit}
+          tableRef={tableRef}
+        />
       </div>
     </div>
   );
