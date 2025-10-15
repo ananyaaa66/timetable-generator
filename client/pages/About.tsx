@@ -2,21 +2,21 @@ import { Sparkles, Target, Users } from "lucide-react";
 
 const missionPoints = [
   {
-    title: "Purpose-built for clarity",
+    title: "Purpose-built for faculty",
     description:
-      "We wanted students, mentors, and coordinators to craft schedules without spreadsheets or manual juggling.",
+      "No more whiteboards or overlapping sessions—teachers receive a clear path through every section they instruct.",
     icon: Sparkles,
   },
   {
-    title: "Designed for flexibility",
+    title: "Designed for leadership",
     description:
-      "Every timetable is editable after generation, making it simple to adjust lessons, rooms, or facilitators.",
+      "Department heads can visualise staffing coverage, reassign lessons, and keep mentors where they are needed most.",
     icon: Target,
   },
   {
-    title: "Community collaboration",
+    title: "Collaboration-ready",
     description:
-      "Timetables can be exported and shared instantly, encouraging collaborative planning across teams.",
+      "Export timetables to share with administrators, coordinators, and co-teachers in seconds.",
     icon: Users,
   },
 ];
@@ -24,7 +24,7 @@ const missionPoints = [
 const values = [
   {
     heading: "Clarity first",
-    body: "Visual layouts, pastel palettes, and accessible typography make planning feel calm and intentional.",
+    body: "Visual layouts, pastel palettes, and accessible typography make staff planning feel calm and intentional.",
   },
   {
     heading: "Time well spent",
@@ -43,12 +43,11 @@ export default function About() {
         <div className="max-w-3xl space-y-6">
           <span className="chip">About Timetable Generator</span>
           <h1 className="text-4xl font-semibold md:text-5xl">
-            Thoughtfully crafted by Ananya Singh to bring calm to your weekly planning
+            Built by Ananya Singh to streamline teaching rotations and faculty coverage
           </h1>
           <p className="text-base text-foreground/70 md:text-lg">
-            This project began as a personal quest to simplify the chaos of class schedules. With a modern user
-            experience and a focus on accessibility, the Timetable Generator empowers classrooms, project teams, and
-            individual learners to achieve more with structured, editable timetables.
+            Teachers deserve a planning companion that prioritises their time. The Timetable Generator keeps sections in
+            sync, honours subject contact hours, and gives leadership an instant snapshot of coverage across the week.
           </p>
         </div>
       </section>
@@ -73,13 +72,13 @@ export default function About() {
           <div className="space-y-4">
             <h2 className="text-3xl font-semibold">Meet the maker</h2>
             <p className="text-sm text-foreground/70 md:text-base">
-              Hi, I am <span className="font-semibold text-primary">Ananya Singh</span>. I created the Timetable
-              Generator as a collaborative tool for educators and learners. Whether you are organising study groups or
-              coordinating faculty schedules, this application keeps everyone aligned and informed.
+              Hi, I am <span className="font-semibold text-primary">Ananya Singh</span>. I created this generator for
+              teachers who juggle multiple sections daily. It adapts to changing timetables and keeps every class on a
+              unique slot so you never sprint between rooms.
             </p>
             <p className="text-sm text-foreground/70 md:text-base">
-              The project continues to grow with feedback from real classrooms and remote teams. Expect a steady stream of
-              enhancements—from advanced export formats to intelligent subject balancing.
+              The roadmap includes richer analytics for subject loads, support for co-teaching, and seamless exports into
+              school communication platforms.
             </p>
           </div>
           <aside className="glass-panel space-y-5 p-6">
