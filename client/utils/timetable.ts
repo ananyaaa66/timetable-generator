@@ -20,6 +20,8 @@ export interface TimetableResult {
   days: string[];
   subjects: SubjectConfig[];
   unassignedSessions: number;
+  totalSlots: number;
+  requiredSessions: number;
 }
 
 const PERIOD_LABELS = [
@@ -67,6 +69,8 @@ export function generateTimetable(config: TimetableConfig): TimetableResult {
       days,
       subjects,
       unassignedSessions: 0,
+      totalSlots: days.length * periods,
+      requiredSessions: 0,
     };
   }
 
@@ -108,6 +112,8 @@ export function generateTimetable(config: TimetableConfig): TimetableResult {
     days,
     subjects,
     unassignedSessions: unassigned,
+    totalSlots,
+    requiredSessions,
   };
 }
 
