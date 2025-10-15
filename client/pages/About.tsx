@@ -67,7 +67,7 @@ export default function About() {
         ))}
       </section>
 
-      <section className="rounded-[2.5rem] border border-white/50 bg-white/80 p-10 shadow-card">
+      <section id="resources" className="rounded-[2.5rem] border border-white/50 bg-white/80 p-10 shadow-card">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div className="space-y-4">
             <h2 className="text-3xl font-semibold">Meet the maker</h2>
