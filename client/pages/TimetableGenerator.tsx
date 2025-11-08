@@ -837,7 +837,7 @@ export default function TimetableGenerator() {
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="space-y-3">
           <h1 className="text-3xl font-semibold md:text-4xl">
-            Teacher Timetable Generator
+            timetable generator
           </h1>
           <p className="max-w-2xl text-sm text-foreground/70 md:text-base">
             Capture the subjects you teach, weekly contact hours, and number of

@@ -23,7 +23,7 @@ export function RootLayout({ children }: RootLayoutProps) {
           <Link to="/" className="flex items-center gap-2">
             <span className="chip">Faculty Suite</span>
             <span className="font-display text-lg font-semibold tracking-tight">
-              Teacher Timetable Generator
+              timetable generator
             </span>
           </Link>
           <nav className="hidden items-center gap-1 md:flex">
@@ -89,7 +89,7 @@ export function RootLayout({ children }: RootLayoutProps) {
         <div className="container flex flex-col gap-6 py-10 md:flex-row md:items-center md:justify-between">
           <div className="space-y-1">
             <p className="font-display text-lg font-semibold text-foreground">
-              Teacher Timetable Generator
+              timetable generator
             </p>
             <p className="text-sm text-foreground/70">
               Crafted to keep instructors in sync across sections, rooms, and
