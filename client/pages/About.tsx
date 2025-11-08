@@ -43,8 +43,8 @@ export default function About() {
         <div className="max-w-3xl space-y-6">
           <span className="chip">About timetable generator</span>
           <h1 className="text-4xl font-semibold md:text-5xl">
-            Built by Ananya Singh and Unnati Negi to streamline teaching
-            rotations and faculty coverage
+            Built by Ananya Singh and Unnati Negi to streamline teaching rotations and faculty
+            coverage
           </h1>
           <p className="text-base text-foreground/70 md:text-lg">
             Teachers deserve a planning companion that prioritises their time.
@@ -81,10 +81,8 @@ export default function About() {
             <h2 className="text-3xl font-semibold">Meet the maker</h2>
             <p className="text-sm text-foreground/70 md:text-base">
               Hi, we are{" "}
-              <span className="font-semibold text-primary">Ananya Singh</span>{" "}
-              and{" "}
-              <span className="font-semibold text-primary">Unnati Negi</span>. I
-              created this generator for teachers who juggle multiple sections
+              <span className="font-semibold text-primary">Ananya Singh</span> and <span className="font-semibold text-primary">Unnati Negi</span>.
+              We created this generator for teachers who juggle multiple sections
               daily. It adapts to changing timetables and keeps every class on a
               unique slot so you never sprint between rooms.
             </p>
