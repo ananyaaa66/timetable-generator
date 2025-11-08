@@ -350,8 +350,8 @@ function TimetablePreview({
                           >
                             {cell}
                           </div>
-                        </td)
-                      )}
+                        </td>
+                      ))}
                     </tr>
                   ))}
                 </tbody>
@@ -783,7 +783,7 @@ export default function TimetableGenerator() {
         <div className="grid gap-6 lg:grid-cols-[1.35fr_0.65fr]">
           <div className="space-y-4">
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-semibold text-foreground/80">Teachers name</label>
+              <label className="text-sm font-semibold text-foreground/80">Teacher's name</label>
               <input
                 type="text"
                 value={teacherName}
