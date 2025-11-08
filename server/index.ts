@@ -20,5 +20,10 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
 
+  // Timetable API
+  app.post("/api/timetables", createTimetable);
+  app.get("/api/timetables", listTimetables);
+  app.get("/api/timetables/:id", getTimetable);
+
   return app;
 }
