@@ -43,14 +43,62 @@ interface StoredState {
 }
 
 const defaultSubjectTemplates: SubjectConfig[] = [
-  { name: "Mathematics", sessionsPerWeek: 4, classType: "Theory", category: "Regular", preferredHalf: "First" },
-  { name: "Science", sessionsPerWeek: 3, classType: "Theory", category: "Regular", preferredHalf: "First" },
-  { name: "English", sessionsPerWeek: 3, classType: "Theory", category: "Regular", preferredHalf: "First" },
-  { name: "History", sessionsPerWeek: 2, classType: "Theory", category: "Regular", preferredHalf: "Second" },
-  { name: "Computer Science", sessionsPerWeek: 2, classType: "Lab", category: "Regular", preferredHalf: "Second" },
-  { name: "Physical Education", sessionsPerWeek: 2, classType: "Theory", category: "Regular", preferredHalf: "Second" },
-  { name: "Music", sessionsPerWeek: 1, classType: "Theory", category: "Remedial", preferredHalf: "Second" },
-  { name: "Art", sessionsPerWeek: 1, classType: "Theory", category: "Remedial", preferredHalf: "Second" },
+  {
+    name: "Mathematics",
+    sessionsPerWeek: 4,
+    classType: "Theory",
+    category: "Regular",
+    preferredHalf: "First",
+  },
+  {
+    name: "Science",
+    sessionsPerWeek: 3,
+    classType: "Theory",
+    category: "Regular",
+    preferredHalf: "First",
+  },
+  {
+    name: "English",
+    sessionsPerWeek: 3,
+    classType: "Theory",
+    category: "Regular",
+    preferredHalf: "First",
+  },
+  {
+    name: "History",
+    sessionsPerWeek: 2,
+    classType: "Theory",
+    category: "Regular",
+    preferredHalf: "Second",
+  },
+  {
+    name: "Computer Science",
+    sessionsPerWeek: 2,
+    classType: "Lab",
+    category: "Regular",
+    preferredHalf: "Second",
+  },
+  {
+    name: "Physical Education",
+    sessionsPerWeek: 2,
+    classType: "Theory",
+    category: "Regular",
+    preferredHalf: "Second",
+  },
+  {
+    name: "Music",
+    sessionsPerWeek: 1,
+    classType: "Theory",
+    category: "Remedial",
+    preferredHalf: "Second",
+  },
+  {
+    name: "Art",
+    sessionsPerWeek: 1,
+    classType: "Theory",
+    category: "Remedial",
+    preferredHalf: "Second",
+  },
 ];
 
 const createEmptySubject = (): SubjectConfig => ({
@@ -192,11 +240,7 @@ function DaySelector({
   );
 }
 
-function TeacherPreview({
-  timetable,
-}: {
-  timetable: TimetableResult | null;
-}) {
+function TeacherPreview({ timetable }: { timetable: TimetableResult | null }) {
   if (!timetable || timetable.teacherGrid.length === 0) return null;
   return (
     <div className="glass-panel space-y-4 p-6">
@@ -266,8 +310,13 @@ function TimetablePreview({
     return (
       <div className="glass-panel flex flex-col items-center justify-center gap-3 p-10 text-center text-foreground/60">
         <CalendarPlus className="size-10 text-primary" />
-        <p className="font-semibold">Your timetable will appear here after generation.</p>
-        <p className="max-w-sm text-sm text-foreground/55">Configure the form above, then select “Generate timetable” to populate your teaching rotation.</p>
+        <p className="font-semibold">
+          Your timetable will appear here after generation.
+        </p>
+        <p className="max-w-sm text-sm text-foreground/55">
+          Configure the form above, then select “Generate timetable” to populate
+          your teaching rotation.
+        </p>
       </div>
     );
   }
@@ -279,16 +328,26 @@ function TimetablePreview({
     <div ref={tableRef} className="space-y-6">
       <div className="glass-panel flex flex-wrap items-center justify-between gap-4 p-6 text-sm text-foreground/70">
         <div className="space-y-1">
-          <p className="text-base font-semibold text-foreground">Scheduling summary</p>
+          <p className="text-base font-semibold text-foreground">
+            Scheduling summary
+          </p>
           <p>
-            {assignedSessions} of {timetable.requiredSessions} sessions scheduled across {timetable.sections.length} sections.
+            {assignedSessions} of {timetable.requiredSessions} sessions
+            scheduled across {timetable.sections.length} sections.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm">
-          <span className="rounded-full bg-primary/10 px-3 py-1 text-primary">Total slots: {timetable.totalSlots}</span>
-          <span className="rounded-full bg-accent/40 px-3 py-1 text-accent-foreground">Teaching days: {timetable.days.length}</span>
+          <span className="rounded-full bg-primary/10 px-3 py-1 text-primary">
+            Total slots: {timetable.totalSlots}
+          </span>
+          <span className="rounded-full bg-accent/40 px-3 py-1 text-accent-foreground">
+            Teaching days: {timetable.days.length}
+          </span>
           <span className="rounded-full bg-secondary/40 px-3 py-1 text-secondary-foreground">
-            Periods/day: {timetable.sections[0].grid.length > 0 ? timetable.sections[0].grid.length : 0}
+            Periods/day:{" "}
+            {timetable.sections[0].grid.length > 0
+              ? timetable.sections[0].grid.length
+              : 0}
           </span>
         </div>
       </div>
@@ -304,7 +363,9 @@ function TimetablePreview({
         {timetable.sections.map((section, sectionIndex) => (
           <div key={section.name} className="glass-panel space-y-4 p-6">
             <div className="flex items-center justify-between gap-4">
-              <h3 className="font-display text-lg font-semibold text-foreground">{section.name}</h3>
+              <h3 className="font-display text-lg font-semibold text-foreground">
+                {section.name}
+              </h3>
               <span className="chip">{timetable.days.length} day rotation</span>
             </div>
             <div className="overflow-x-auto">
@@ -400,8 +461,10 @@ export default function TimetableGenerator() {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (!stored) return;
       const parsed = JSON.parse(stored) as StoredState;
-      if (typeof parsed.teacherName === "string") setTeacherName(parsed.teacherName);
-      if (Array.isArray(parsed.sectionNames) && parsed.sectionNames.length) setSectionNames(parsed.sectionNames);
+      if (typeof parsed.teacherName === "string")
+        setTeacherName(parsed.teacherName);
+      if (Array.isArray(parsed.sectionNames) && parsed.sectionNames.length)
+        setSectionNames(parsed.sectionNames);
       if (parsed.subjects?.length) {
         const normalized = parsed.subjects.map((subject) => ({
           name: subject.name,
@@ -486,19 +549,25 @@ export default function TimetableGenerator() {
 
   const handleSubjectTypeChange = (index: number, value: ClassType) => {
     setSubjects((prev) =>
-      prev.map((subject, i) => (i === index ? { ...subject, classType: value } : subject)),
+      prev.map((subject, i) =>
+        i === index ? { ...subject, classType: value } : subject,
+      ),
     );
   };
 
   const handleSubjectCategoryChange = (index: number, value: ClassCategory) => {
     setSubjects((prev) =>
-      prev.map((subject, i) => (i === index ? { ...subject, category: value } : subject)),
+      prev.map((subject, i) =>
+        i === index ? { ...subject, category: value } : subject,
+      ),
     );
   };
 
   const handleSubjectHalfChange = (index: number, value: HalfPreference) => {
     setSubjects((prev) =>
-      prev.map((subject, i) => (i === index ? { ...subject, preferredHalf: value } : subject)),
+      prev.map((subject, i) =>
+        i === index ? { ...subject, preferredHalf: value } : subject,
+      ),
     );
   };
 
@@ -716,7 +785,9 @@ export default function TimetableGenerator() {
       lines.push(["Periods", ...timetable.days].join(","));
       for (let p = 0; p < grid.length; p += 1) {
         const row = [getPeriodLabel(p), ...grid[p]];
-        lines.push(row.map((v) => `"${(v || "").replace(/"/g, '""')}"`).join(","));
+        lines.push(
+          row.map((v) => `"${(v || "").replace(/"/g, '""')}"`).join(","),
+        );
       }
       lines.push("");
     };
@@ -730,7 +801,9 @@ export default function TimetableGenerator() {
       buildCsvFromGrid(section.name, section.grid);
     });
 
-    const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8;" });
+    const blob = new Blob([lines.join("\n")], {
+      type: "text/csv;charset=utf-8;",
+    });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -763,7 +836,9 @@ export default function TimetableGenerator() {
     <div className="space-y-12">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="space-y-3">
-          <h1 className="text-3xl font-semibold md:text-4xl">Teacher Timetable Generator</h1>
+          <h1 className="text-3xl font-semibold md:text-4xl">
+            Teacher Timetable Generator
+          </h1>
           <p className="max-w-2xl text-sm text-foreground/70 md:text-base">
             Capture the subjects you teach, weekly contact hours, and number of
             sections. Generate a conflict-free plan that keeps every class on a
@@ -779,11 +854,16 @@ export default function TimetableGenerator() {
         </button>
       </div>
 
-      <form onSubmit={handleGenerate} className="glass-panel space-y-10 bg-white/85 p-8 shadow-glow">
+      <form
+        onSubmit={handleGenerate}
+        className="glass-panel space-y-10 bg-white/85 p-8 shadow-glow"
+      >
         <div className="grid gap-6 lg:grid-cols-[1.35fr_0.65fr]">
           <div className="space-y-4">
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-semibold text-foreground/80">Teacher's name</label>
+              <label className="text-sm font-semibold text-foreground/80">
+                Teacher's name
+              </label>
               <input
                 type="text"
                 value={teacherName}
@@ -794,16 +874,23 @@ export default function TimetableGenerator() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-semibold text-foreground/80">Number of subjects</label>
+              <label className="text-sm font-semibold text-foreground/80">
+                Number of subjects
+              </label>
               <input
                 type="number"
                 min={1}
                 max={16}
                 value={subjectCount}
-                onChange={(event) => handleSubjectCountChange(Number(event.target.value))}
+                onChange={(event) =>
+                  handleSubjectCountChange(Number(event.target.value))
+                }
                 className="h-12 rounded-2xl border border-border bg-white/80 px-4 text-sm text-foreground outline-none transition focus:border-primary/70"
               />
-              <p className="text-xs text-foreground/50">Add every subject you teach and specify how many times each section meets per week.</p>
+              <p className="text-xs text-foreground/50">
+                Add every subject you teach and specify how many times each
+                section meets per week.
+              </p>
             </div>
 
             <SubjectInputs
@@ -818,20 +905,31 @@ export default function TimetableGenerator() {
 
           <div className="space-y-6">
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-foreground/80">Number of sections</label>
+              <label className="text-sm font-semibold text-foreground/80">
+                Number of sections
+              </label>
               <input
                 type="number"
                 min={1}
                 max={12}
                 value={sectionCount}
-                onChange={(event) => setSectionCount(Math.min(Math.max(Number(event.target.value) || 1, 1), 12))}
+                onChange={(event) =>
+                  setSectionCount(
+                    Math.min(Math.max(Number(event.target.value) || 1, 1), 12),
+                  )
+                }
                 className="h-12 rounded-2xl border border-border bg-white/80 px-4 text-sm text-foreground outline-none transition focus:border-primary/70"
               />
-              <p className="text-xs text-foreground/50">Provide section names below (e.g., Section A, Section B). Labs consume consecutive slots automatically.</p>
+              <p className="text-xs text-foreground/50">
+                Provide section names below (e.g., Section A, Section B). Labs
+                consume consecutive slots automatically.
+              </p>
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-foreground/80">Section names</label>
+              <label className="text-sm font-semibold text-foreground/80">
+                Section names
+              </label>
               <div className="grid grid-cols-2 gap-2">
                 {sectionNames.slice(0, sectionCount).map((name, idx) => (
                   <input
@@ -839,7 +937,9 @@ export default function TimetableGenerator() {
                     type="text"
                     value={name}
                     onChange={(e) =>
-                      setSectionNames((prev) => prev.map((n, i) => (i === idx ? e.target.value : n)))
+                      setSectionNames((prev) =>
+                        prev.map((n, i) => (i === idx ? e.target.value : n)),
+                      )
                     }
                     className="h-10 rounded-xl border border-border bg-white/80 px-3 text-sm text-foreground outline-none transition focus:border-primary/70"
                   />
@@ -848,33 +948,69 @@ export default function TimetableGenerator() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-foreground/80">Days of the week (selectable checkboxes)</label>
-              <DaySelector selectedDays={selectedDays} onToggle={handleToggleDay} />
+              <label className="text-sm font-semibold text-foreground/80">
+                Days of the week (selectable checkboxes)
+              </label>
+              <DaySelector
+                selectedDays={selectedDays}
+                onToggle={handleToggleDay}
+              />
               <div className="flex flex-wrap gap-2 text-xs text-foreground/50">
-                <button type="button" onClick={() => setSelectedDays(dayOptions.slice(0, 5).map((d) => d.value))} className="underline-offset-4 transition hover:text-primary">Weekdays</button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setSelectedDays(dayOptions.slice(0, 5).map((d) => d.value))
+                  }
+                  className="underline-offset-4 transition hover:text-primary"
+                >
+                  Weekdays
+                </button>
                 <span className="hidden h-3 w-px bg-foreground/20 sm:block" />
-                <button type="button" onClick={() => setSelectedDays(dayOptions.slice(0, 7).map((d) => d.value))} className="underline-offset-4 transition hover:text-primary">Full week</button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setSelectedDays(dayOptions.slice(0, 7).map((d) => d.value))
+                  }
+                  className="underline-offset-4 transition hover:text-primary"
+                >
+                  Full week
+                </button>
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-foreground/80">Number of periods per day</label>
+              <label className="text-sm font-semibold text-foreground/80">
+                Number of periods per day
+              </label>
               <input
                 type="number"
                 min={1}
                 max={12}
                 value={periodsPerDay}
-                onChange={(event) => setPeriodsPerDay(Math.min(Math.max(Number(event.target.value) || 1, 1), 12))}
+                onChange={(event) =>
+                  setPeriodsPerDay(
+                    Math.min(Math.max(Number(event.target.value) || 1, 1), 12),
+                  )
+                }
                 className="h-12 rounded-2xl border border-border bg-white/80 px-4 text-sm text-foreground outline-none transition focus:border-primary/70"
               />
-              <p className="text-xs text-foreground/50">First half maps to the first half of periods; second half to the latter. Remedials use free slots by default.</p>
+              <p className="text-xs text-foreground/50">
+                First half maps to the first half of periods; second half to the
+                latter. Remedials use free slots by default.
+              </p>
             </div>
           </div>
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-foreground/60">Tip: Hover any cell to edit rooms, co-teachers, or lesson notes after scheduling.</p>
-          <button type="submit" className="soft-button-primary inline-flex items-center">
+          <p className="text-sm text-foreground/60">
+            Tip: Hover any cell to edit rooms, co-teachers, or lesson notes
+            after scheduling.
+          </p>
+          <button
+            type="submit"
+            className="soft-button-primary inline-flex items-center"
+          >
             <CalendarPlus className="mr-2 size-4" /> Generate timetable
           </button>
         </div>
@@ -882,17 +1018,37 @@ export default function TimetableGenerator() {
 
       <div className="flex flex-col gap-4 rounded-[2.5rem] border border-white/40 bg-white/80 p-6 shadow-card xl:flex-row xl:items-center xl:justify-between">
         <div className="space-y-1">
-          <p className="text-lg font-semibold text-foreground">Output controls</p>
-          <p className="text-sm text-foreground/65">Save a draft or export to share with leadership teams and faculty.</p>
+          <p className="text-lg font-semibold text-foreground">
+            Output controls
+          </p>
+          <p className="text-sm text-foreground/65">
+            Save a draft or export to share with leadership teams and faculty.
+          </p>
         </div>
         <div className="flex flex-wrap gap-3">
-          <button type="button" onClick={handleSave} disabled={isSaving} className="soft-button-secondary inline-flex items-center disabled:cursor-not-allowed disabled:opacity-70">
-            <Save className="mr-2 size-4" /> {isSaving ? "Saving..." : "Save timetable"}
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={isSaving}
+            className="soft-button-secondary inline-flex items-center disabled:cursor-not-allowed disabled:opacity-70"
+          >
+            <Save className="mr-2 size-4" />{" "}
+            {isSaving ? "Saving..." : "Save timetable"}
           </button>
-          <button type="button" onClick={handleDownloadPdf} disabled={isExporting} className="soft-button-primary inline-flex items-center disabled:cursor-not-allowed disabled:opacity-70">
-            <Download className="mr-2 size-4" /> {isExporting ? "Exporting..." : "Download as PDF"}
+          <button
+            type="button"
+            onClick={handleDownloadPdf}
+            disabled={isExporting}
+            className="soft-button-primary inline-flex items-center disabled:cursor-not-allowed disabled:opacity-70"
+          >
+            <Download className="mr-2 size-4" />{" "}
+            {isExporting ? "Exporting..." : "Download as PDF"}
           </button>
-          <button type="button" onClick={handleDownloadCsv} className="soft-button bg-white/80 text-foreground/75">
+          <button
+            type="button"
+            onClick={handleDownloadCsv}
+            className="soft-button bg-white/80 text-foreground/75"
+          >
             <Download className="mr-2 size-4" /> Download as Excel (CSV)
           </button>
         </div>
@@ -901,9 +1057,16 @@ export default function TimetableGenerator() {
       <div className="rounded-[2.5rem] border border-white/40 bg-white/80 p-6 shadow-card">
         <div className="mb-4 flex items-center gap-3 text-sm text-foreground/70">
           <Users2 className="size-4 text-primary" />
-          <span>Generated timetables stagger sessions across sections so the same teacher is never scheduled in two rooms at once.</span>
+          <span>
+            Generated timetables stagger sessions across sections so the same
+            teacher is never scheduled in two rooms at once.
+          </span>
         </div>
-        <TimetablePreview timetable={timetable} onCellEdit={handleCellEdit} tableRef={tableRef} />
+        <TimetablePreview
+          timetable={timetable}
+          onCellEdit={handleCellEdit}
+          tableRef={tableRef}
+        />
       </div>
     </div>
   );

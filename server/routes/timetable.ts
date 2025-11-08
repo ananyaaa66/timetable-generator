@@ -20,7 +20,11 @@ export const createTimetable: RequestHandler = (req, res) => {
     return;
   }
   const id = body.id && typeof body.id === "string" ? body.id : genId();
-  const record: SaveBody = { id, teacherName: body.teacherName, payload: body.payload };
+  const record: SaveBody = {
+    id,
+    teacherName: body.teacherName,
+    payload: body.payload,
+  };
   store.set(id, record);
   res.status(201).json({ id });
 };
@@ -35,6 +39,9 @@ export const getTimetable: RequestHandler = (req, res) => {
 };
 
 export const listTimetables: RequestHandler = (_req, res) => {
-  const items = Array.from(store.values()).map((r) => ({ id: r.id, teacherName: r.teacherName }));
+  const items = Array.from(store.values()).map((r) => ({
+    id: r.id,
+    teacherName: r.teacherName,
+  }));
   res.status(200).json({ items });
 };

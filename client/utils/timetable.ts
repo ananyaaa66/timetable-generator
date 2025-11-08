@@ -117,7 +117,10 @@ function findNextAvailableSingle(
     const idx = (cursor + iter) % total;
     const s = slots[idx];
     if (preferredHalf && s.half !== preferredHalf) continue;
-    if (!teacherTracker[s.periodIndex][s.dayIndex] && !sectionGrid[s.periodIndex][s.dayIndex]) {
+    if (
+      !teacherTracker[s.periodIndex][s.dayIndex] &&
+      !sectionGrid[s.periodIndex][s.dayIndex]
+    ) {
       return { ...s, slotIndex: idx };
     }
   }
@@ -161,10 +164,15 @@ export function calculateRequiredSessions(
   subjects: SubjectConfig[],
   sections: number,
 ): number {
-  return subjects.reduce((total, subject) => total + subject.sessionsPerWeek * sections, 0);
+  return subjects.reduce(
+    (total, subject) => total + subject.sessionsPerWeek * sections,
+    0,
+  );
 }
 
-function normalizeSubjects(subjects: SubjectConfig[]): Required<SubjectConfig>[] {
+function normalizeSubjects(
+  subjects: SubjectConfig[],
+): Required<SubjectConfig>[] {
   return subjects.map((s) => ({
     name: s.name.trim(),
     sessionsPerWeek: Math.max(0, Math.round(s.sessionsPerWeek || 0)),
@@ -175,14 +183,17 @@ function normalizeSubjects(subjects: SubjectConfig[]): Required<SubjectConfig>[]
 }
 
 export function generateTimetable(config: TimetableConfig): TimetableResult {
-  const normalized = normalizeSubjects(config.subjects).filter((s) => s.name && s.sessionsPerWeek > 0);
+  const normalized = normalizeSubjects(config.subjects).filter(
+    (s) => s.name && s.sessionsPerWeek > 0,
+  );
   const days = [...config.days];
   const periods = Math.max(0, config.periodsPerDay);
   const sectionsCount = Math.max(1, config.sections);
 
-  const sectionNames = (config.sectionNames && config.sectionNames.length === sectionsCount
-    ? config.sectionNames
-    : Array.from({ length: sectionsCount }, (_, i) => createSectionName(i))
+  const sectionNames = (
+    config.sectionNames && config.sectionNames.length === sectionsCount
+      ? config.sectionNames
+      : Array.from({ length: sectionsCount }, (_, i) => createSectionName(i))
   ).map((n) => n.trim() || "Section");
 
   if (!normalized.length || !days.length || periods === 0) {
@@ -194,7 +205,9 @@ export function generateTimetable(config: TimetableConfig): TimetableResult {
       unassignedSessions: 0,
       totalSlots: days.length * periods,
       requiredSessions: 0,
-      periodLabels: Array.from({ length: periods }, (_, i) => getPeriodLabel(i)),
+      periodLabels: Array.from({ length: periods }, (_, i) =>
+        getPeriodLabel(i),
+      ),
       sectionNames,
       teacherName: config.teacherName,
     };
@@ -204,7 +217,9 @@ export function generateTimetable(config: TimetableConfig): TimetableResult {
   const requiredSessions = calculateRequiredSessions(normalized, sectionsCount);
 
   const slots = generateSlots(days.length, periods);
-  const sectionGrids = sectionNames.map(() => createEmptyGrid(periods, days.length));
+  const sectionGrids = sectionNames.map(() =>
+    createEmptyGrid(periods, days.length),
+  );
   const teacherTracker = createSlotTracker(days.length, periods);
 
   let unassigned = 0;
@@ -213,22 +228,46 @@ export function generateTimetable(config: TimetableConfig): TimetableResult {
   // Order: Regular Labs -> Regular Theory -> Remedial Labs -> Remedial Theory
   const buckets = [
     normalized.filter((s) => s.category === "Regular" && s.classType === "Lab"),
-    normalized.filter((s) => s.category === "Regular" && s.classType === "Theory"),
-    normalized.filter((s) => s.category === "Remedial" && s.classType === "Lab"),
-    normalized.filter((s) => s.category === "Remedial" && s.classType === "Theory"),
+    normalized.filter(
+      (s) => s.category === "Regular" && s.classType === "Theory",
+    ),
+    normalized.filter(
+      (s) => s.category === "Remedial" && s.classType === "Lab",
+    ),
+    normalized.filter(
+      (s) => s.category === "Remedial" && s.classType === "Theory",
+    ),
   ];
 
   for (const list of buckets) {
     for (const subject of list) {
-      for (let sectionIndex = 0; sectionIndex < sectionsCount; sectionIndex += 1) {
+      for (
+        let sectionIndex = 0;
+        sectionIndex < sectionsCount;
+        sectionIndex += 1
+      ) {
         for (let session = 0; session < subject.sessionsPerWeek; session += 1) {
           const grid = sectionGrids[sectionIndex];
           let placed = false;
 
           if (subject.classType === "Lab") {
             // Try preferred half first
-            const preferred = findNextAvailableDouble(slots, teacherTracker, grid, cursor, subject.preferredHalf);
-            const anyHalf = preferred ?? findNextAvailableDouble(slots, teacherTracker, grid, cursor, undefined);
+            const preferred = findNextAvailableDouble(
+              slots,
+              teacherTracker,
+              grid,
+              cursor,
+              subject.preferredHalf,
+            );
+            const anyHalf =
+              preferred ??
+              findNextAvailableDouble(
+                slots,
+                teacherTracker,
+                grid,
+                cursor,
+                undefined,
+              );
             if (anyHalf) {
               const { first, second } = anyHalf;
               grid[first.periodIndex][first.dayIndex] = subject.name;
@@ -239,8 +278,22 @@ export function generateTimetable(config: TimetableConfig): TimetableResult {
               placed = true;
             }
           } else {
-            const preferred = findNextAvailableSingle(slots, teacherTracker, grid, cursor, subject.preferredHalf);
-            const anyHalf = preferred ?? findNextAvailableSingle(slots, teacherTracker, grid, cursor, undefined);
+            const preferred = findNextAvailableSingle(
+              slots,
+              teacherTracker,
+              grid,
+              cursor,
+              subject.preferredHalf,
+            );
+            const anyHalf =
+              preferred ??
+              findNextAvailableSingle(
+                slots,
+                teacherTracker,
+                grid,
+                cursor,
+                undefined,
+              );
             if (anyHalf) {
               grid[anyHalf.periodIndex][anyHalf.dayIndex] = subject.name;
               teacherTracker[anyHalf.periodIndex][anyHalf.dayIndex] = true;
@@ -273,7 +326,10 @@ export function generateTimetable(config: TimetableConfig): TimetableResult {
   }
 
   return {
-    sections: sectionNames.map((name, index) => ({ name, grid: sectionGrids[index] })),
+    sections: sectionNames.map((name, index) => ({
+      name,
+      grid: sectionGrids[index],
+    })),
     days,
     subjects: normalized,
     teacherGrid,
