@@ -273,7 +273,12 @@ function TeacherPreview({ timetable }: { timetable: TimetableResult | null }) {
               <tr key={`teacher-period-${periodIndex}`}>
                 <td className="sticky left-0 z-10 border-y border-l border-white/60 bg-white/80 px-4 py-3 font-semibold text-foreground/90">
                   {getPeriodLabel(periodIndex)}
-                  <span className="ml-2 text-xs text-foreground/60">{getPeriodTimeRange(periodIndex, timetable.sections[0].grid.length)}</span>
+                  <span className="ml-2 text-xs text-foreground/60">
+                    {getPeriodTimeRange(
+                      periodIndex,
+                      timetable.sections[0].grid.length,
+                    )}
+                  </span>
                 </td>
                 {row.map((cell, dayIndex) => (
                   <td
@@ -392,7 +397,12 @@ function TimetablePreview({
                     <tr key={`${section.name}-period-${periodIndex}`}>
                       <td className="sticky left-0 z-10 border-y border-l border-white/60 bg-white/80 px-4 py-3 font-semibold text-foreground/90">
                         {getPeriodLabel(periodIndex)}
-                        <span className="ml-2 text-xs text-foreground/60">{getPeriodTimeRange(periodIndex, timetable.sections[0].grid.length)}</span>
+                        <span className="ml-2 text-xs text-foreground/60">
+                          {getPeriodTimeRange(
+                            periodIndex,
+                            timetable.sections[0].grid.length,
+                          )}
+                        </span>
                       </td>
                       {row.map((cell, dayIndex) => (
                         <td
@@ -787,7 +797,10 @@ export default function TimetableGenerator() {
       lines.push(title);
       lines.push(["Periods", ...timetable.days].join(","));
       for (let p = 0; p < grid.length; p += 1) {
-        const row = [`${getPeriodLabel(p)} (${getPeriodTimeRange(p, timetable.sections[0].grid.length)})`, ...grid[p]];
+        const row = [
+          `${getPeriodLabel(p)} (${getPeriodTimeRange(p, timetable.sections[0].grid.length)})`,
+          ...grid[p],
+        ];
         lines.push(
           row.map((v) => `"${(v || "").replace(/"/g, '""')}"`).join(","),
         );
