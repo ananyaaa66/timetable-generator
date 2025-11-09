@@ -60,6 +60,33 @@ export function getPeriodLabel(index: number) {
   return `Period ${index + 1}`;
 }
 
+function pad(n: number) {
+  return n < 10 ? `0${n}` : `${n}`;
+}
+
+function minutesToHHMM(total: number) {
+  const h = Math.floor(total / 60);
+  const m = total % 60;
+  return `${pad(h)}:${pad(m)}`;
+}
+
+export function getPeriodTimeRange(
+  periodIndex: number,
+  periodsPerDay: number,
+  periodMinutes = 50,
+): string {
+  // First half: 09:00–13:00; Second half: 13:00–18:00
+  const firstStart = 9 * 60;
+  const secondStart = 13 * 60;
+  const mid = Math.ceil(periodsPerDay / 2);
+  const startMinutes =
+    periodIndex < mid
+      ? firstStart + periodIndex * periodMinutes
+      : secondStart + (periodIndex - mid) * periodMinutes;
+  const endMinutes = startMinutes + periodMinutes;
+  return `${minutesToHHMM(startMinutes)}–${minutesToHHMM(endMinutes)}`;
+}
+
 function createSectionName(index: number): string {
   const alphabetIndex = index % 26;
   const cycle = Math.floor(index / 26);
