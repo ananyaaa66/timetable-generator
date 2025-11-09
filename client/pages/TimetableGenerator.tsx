@@ -787,7 +787,7 @@ export default function TimetableGenerator() {
       lines.push(title);
       lines.push(["Periods", ...timetable.days].join(","));
       for (let p = 0; p < grid.length; p += 1) {
-        const row = [getPeriodLabel(p), ...grid[p]];
+        const row = [`${getPeriodLabel(p)} (${getPeriodTimeRange(p, timetable.sections[0].grid.length)})`, ...grid[p]];
         lines.push(
           row.map((v) => `"${(v || "").replace(/"/g, '""')}"`).join(","),
         );
