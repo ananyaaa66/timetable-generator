@@ -273,6 +273,7 @@ function TeacherPreview({ timetable }: { timetable: TimetableResult | null }) {
               <tr key={`teacher-period-${periodIndex}`}>
                 <td className="sticky left-0 z-10 border-y border-l border-white/60 bg-white/80 px-4 py-3 font-semibold text-foreground/90">
                   {getPeriodLabel(periodIndex)}
+                  <span className="ml-2 text-xs text-foreground/60">{getPeriodTimeRange(periodIndex, timetable.sections[0].grid.length)}</span>
                 </td>
                 {row.map((cell, dayIndex) => (
                   <td
