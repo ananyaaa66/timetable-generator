@@ -8,6 +8,7 @@ import {
   calculateRequiredSessions,
   generateTimetable,
   getPeriodLabel,
+  getPeriodTimeRange,
   type SubjectConfig,
   type TimetableResult,
   updateSectionCell,
